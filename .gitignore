@@ -140,6 +140,6 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
-# pk3 assets with tremulous_content_server
-pk3_assets/
-gpp/*.pk3
+# pk3 assets not in tremulous_assets/
+*.pk3
+!./tremulous_assets/*.pk3

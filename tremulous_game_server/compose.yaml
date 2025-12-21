@@ -1,0 +1,30 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+services:
+  websockify_server:
+    build:
+      context: ./websockify/.
+    image: websockify_server
+    container_name: websockify_server
+    network_mode: "host"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    environment:
+      SERVER_NAME: ${SERVER_NAME}
+
+  tremulous_server:
+    build:
+      context: ./server/.
+    image: tremulous_game_server
+    container_name: tremulous_game_server
+    network_mode: "host"
+    environment:
+      SERVER_CONFIG: ${SERVER_CONFIG}
+      
