@@ -4631,7 +4631,7 @@ async function createWasm() {
   paks:[{
   src:"vms-1.3.0.pk3",
   dest:"gpp/vms-v1.3.0.pk3",
-  checksum:3490115975,
+  checksum:2244438303,
   },{
   src:"data-1.1.0.pk3",
   dest:"gpp/data-1.1.0.pk3",
