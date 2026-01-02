@@ -38,10 +38,9 @@ var servers = {};
 var pruneInterval = 350 * 1000;
 
 const ip_to_host = {
-	"23.22.163.99": "us-1.game.tremulous.online",
 	"85.215.55.189": "eu-1.game.tremulous.online",
 	"3.107.204.52": "au-1.game.tremulous.online",
-	"192.9.134.0": "us-2.game.tremulous.online",
+	"192.9.134.0": "us-1.game.tremulous.online",
 }
 
 function formatOOB(data) {
