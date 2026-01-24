@@ -45,6 +45,7 @@ const ip_to_host = {
 	"85.215.55.189": "eu-1.game.tremulous.online",
 	"3.107.204.52": "au-1.game.tremulous.online",
 	"192.9.134.0": "us-1.game.tremulous.online",
+	"74.91.124.139": "trem.cherubim.dev",  // Auriga test server
 }
 
 function formatOOB(data) {
