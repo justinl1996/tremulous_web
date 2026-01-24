@@ -157,24 +157,29 @@
 			return args;
 		}
 
+		var gameInstance = null;
+
+		window.addEventListener('pageshow', function(event) {
+			if (event.persisted || performance.navigation.type === 2) {
+				window.location.reload(); //If the user uses the back button after closing, force reload the page
+			}
+		});
+
 		window.onload = function () {
 			function resizeViewport() {
 
-				if (!Module.canvas) {
+				if (!gameInstance || !gameInstance.canvas) {
 					// ignore if the canvas hasn't yet initialized
 					return;
 				}
 				if ((document['webkitFullScreenElement'] || document['webkitFullscreenElement'] ||
-             document['mozFullScreenElement'] || document['mozFullscreenElement'] ||
-             document['fullScreenElement'] || document['fullscreenElement'])) {
+					document['mozFullScreenElement'] || document['mozFullscreenElement'] ||
+					document['fullScreenElement'] || document['fullscreenElement'])) {
 					// ignore resize events due to going fullscreen
 					return;
 				}
-				Module.setCanvasSize(Module.viewport.offsetWidth, Module.viewport.offsetHeight);
+				gameInstance.setCanvasSize(gameInstance.viewport.offsetWidth, gameInstance.viewport.offsetHeight);
 			}
-
-			Module.viewport = document.getElementById('viewport-frame');
-			Module.elementPointerLock = true;
 
 			const randomIndex = Math.floor(Math.random() * allNames.length);
 			const randomName = allNames[randomIndex];
@@ -182,8 +187,24 @@
 			//var args = ['+set', 'fs_cdn', '<%= content %>', '+set', 'fs_game', 'cpma', '+set', 'mapname', 'cpm1a', '+set', 'sv_master1', 'master.tremulous.online', '+set', 'name', randomName];
 			var args = ['+set', 'fs_cdn', '<%= content %>', /*'+set', 'fs_debug', '1',*/ '+set', 'fs_basepath', 'tremulous_base', '+set', 'fs_homepath', 'tremulous_home', '+set', 'sv_master1', 'master.tremulous.online', '+set', 'name', randomName];
 			args.push.apply(args, getQueryCommands());
-			Module.onRuntimeInitialized = function() {
-				Module.callMain(args);
+
+			if (!gameInstance) {
+				gameInstance = tremulous({
+					viewport: document.getElementById('viewport-frame'),
+					elementPointerLock: true,
+					canvas: document.getElementById('canvas'),
+
+					onRuntimeInitialized: function() {
+						this.callMain(args);
+					},
+					onExit: function(statusCode) {
+						if (statusCode === 0) {
+							//window.location.href = 'https://tremulo.us';
+							//This runs when a user quits without error
+							//Handle it however you want
+						}
+					}
+				});
 			}
 		};
 	</script>
