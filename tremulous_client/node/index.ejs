@@ -73,73 +73,6 @@
 	</body>
 
 	<script>
-		const allNames = [
-			"Aelar",
-			"Lyra",
-			"Faelan",
-			"Elowen",
-			"Borin",
-			"Grimgar",
-			"Thrain",
-			"Dagna",
-			"Kael",
-			"Seraphina",
-			"Roric",
-			"Isolde",
-			"Grak",
-			"Zephyr",
-			"Xylia",
-			"Morwen",
-			"Eldrin",
-			"Briseis",
-			"Torvin",
-			"Galen",
-			"Aerion",
-			"Lyanna",
-			"Draven",
-			"Sorina",
-			"Bram",
-			"Caelan",
-			"Elara",
-			"Fenris",
-			"Gwendolyn",
-			"Haldir",
-			"Iona",
-			"Joric",
-			"Kyra",
-			"Lorcan",
-			"Mireya",
-			"Nevin",
-			"Orin",
-			"Pyralia",
-			"Quinn",
-			"Rhys",
-			"Sariel",
-			"Tamsin",
-			"Ulric",
-			"Vael",
-			"Wren",
-			"Xylos",
-			"Ysolde",
-			"Zarek",
-			"Alaric",
-			"Bronwen",
-			"Corbin",
-			"Darian",
-			"Evadne",
-			"Finnian",
-			"Gareth",
-			"Helia",
-			"Ivor",
-			"Jareth",
-			"Kaelen",
-			"Lirael",
-			"Malachi",
-			"Nyx",
-			"Oberon",
-			'Peregrin',
-			"Quillon"
-		]
 		function getQueryCommands() {
 			var search = /([^&=]+)/g;
 			var query  = window.location.search.substring(1);
@@ -180,12 +113,9 @@
 				}
 				gameInstance.setCanvasSize(gameInstance.viewport.offsetWidth, gameInstance.viewport.offsetHeight);
 			}
-
-			const randomIndex = Math.floor(Math.random() * allNames.length);
-			const randomName = allNames[randomIndex];
 			// merge default args with query string args
-			//var args = ['+set', 'fs_cdn', '<%= content %>', '+set', 'fs_game', 'cpma', '+set', 'mapname', 'cpm1a', '+set', 'sv_master1', 'master.tremulous.online', '+set', 'name', randomName];
-			var args = ['+set', 'fs_cdn', '<%= content %>', /*'+set', 'fs_debug', '1',*/ '+set', 'fs_basepath', 'tremulous_base', '+set', 'fs_homepath', 'tremulous_home', '+set', 'sv_master1', 'master.tremulous.online', '+set', 'name', randomName];
+			//var args = [ '+set', 'fs_game', 'cpma', '+set', 'mapname', 'cpm1a', '+set', 'sv_master1', 'master.tremulous.online', '+set', 'name', randomName];
+			var args = ['+set', 'fs_cdn', '"<%= content %>"',/* '+set', 'fs_debug', '1',*/ '+set', 'fs_basepath', 'tremulous_base', '+set', 'fs_homepath', 'tremulous_home', '+set', 'sv_master1', 'master.tremulous.online'];
 			args.push.apply(args, getQueryCommands());
 
 			if (!gameInstance) {

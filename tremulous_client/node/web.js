@@ -24,7 +24,7 @@ var config = loadConfig(argv.config);
 function loadConfig(configPath) {
 	var config = {
 		port: 8080,
-		content: 'content.tremulous.online'
+		content: 'https://content.tremulous.online/assets'
 	};
 
 	try {
