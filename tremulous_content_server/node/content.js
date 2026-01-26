@@ -96,6 +96,27 @@ function generateManifest(callback) {
 	});
 }
 
+function handleNews(req, res, next) {
+	logger.info('serving news to ' + req.ip);
+
+	var newsPath = path.join(__dirname, 'news.txt');
+
+	fs.readFile(newsPath, 'utf8', function (err, data) {
+		if (err) {
+			logger.error('failed to read news.txt', err);
+			// send empty response if file doesn't exist
+			if (err.code === 'ENOENT') {
+				return res.status(204).end();
+			}
+			return res.status(500).end();
+		}
+
+		res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+		res.setHeader('Cache-Control', 'public, max-age=60');
+		res.send(data);
+	});
+}
+
 function handleManifest(req, res, next) {
 	logger.info('serving manifest to ' + req.ip);
 
@@ -158,6 +179,7 @@ function loadConfig(configPath) {
 	});
 	app.use(compression({ filter: function(req, res) { return true; } }));
 	app.get('/assets/manifest.json', handleManifest);
+	app.get('/news.txt', handleNews);
 	app.get(/^\/assets\/(.+\/|)(\d+)-(.+?)$/, handleAsset);
 
 	// generate an initial manifest
