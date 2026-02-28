@@ -214,8 +214,14 @@ function sendGetServersWebResponse(conn, servers) {
 		}
 		
 		msg += '\\' + ip_to_host[server.addr] + ':'
-		msg += String.fromCharCode((server.port & 0xff00) >> 8);
-		msg += String.fromCharCode(server.port & 0xff);
+		port = server.port
+		// HACK: The game server returns the internal port but not the one exposed by websockify
+		if (ip_to_host[server.addr].endsWith("game.tremulous.online")) {
+			port = 30720
+		}
+
+		msg += String.fromCharCode((port & 0xff00) >> 8);
+		msg += String.fromCharCode(port & 0xff);
 	}
 	msg += '\\EOT';
 
