@@ -42,10 +42,9 @@ var servers = {};
 var pruneInterval = 350 * 1000;
 
 const ip_to_host = {
-	"85.215.55.189": "eu-1.game.tremulous.online",
-	"3.107.204.52": "au-1.game.tremulous.online",
-	"192.9.134.0": "us-1.game.tremulous.online",
-	"74.91.124.139": "trem.cherubim.dev",  // Auriga test server
+	"85.215.55.189": {port: 30720, host: "eu-1.game.tremulous.online"},
+	"192.9.134.0": {port: 30720, host: "us-1.game.tremulous.online"},
+	"139.99.210.27": {port: 3326, host: "au-1.game.tremulous.online"},
 }
 
 function formatOOB(data) {
@@ -213,11 +212,11 @@ function sendGetServersWebResponse(conn, servers) {
 			continue
 		}
 		
-		msg += '\\' + ip_to_host[server.addr] + ':'
+		msg += '\\' + ip_to_host[server.addr].host + ':'
 		port = server.port
 		// HACK: The game server returns the internal port but not the one exposed by websockify
-		if (ip_to_host[server.addr].endsWith("game.tremulous.online")) {
-			port = 30720
+		if (ip_to_host[server.addr].host.endsWith("game.tremulous.online")) {
+			port = ip_to_host[server.addr].port;
 		}
 
 		msg += String.fromCharCode((port & 0xff00) >> 8);
