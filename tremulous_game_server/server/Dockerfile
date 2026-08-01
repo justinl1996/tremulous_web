@@ -27,5 +27,5 @@ EXPOSE 40720
 USER ubuntu
 
 # Run the application.
-CMD ./tremded +set fs_homepath /usr/src/app +set dedicated 2 +exec ${SERVER_CONFIG}  +set sv_master1 34.224.65.57
+CMD ./tremded +set fs_homepath /usr/src/app +set dedicated 2 +exec ${SERVER_CONFIG}  +set sv_master1 146.235.227.204
 #CMD sleep 1000
