@@ -25,7 +25,13 @@ if (argv.h || argv.help) {
 
 var logger = winston.createLogger({
 	level: 'debug',
-	format: winston.format.cli(),
+	format: winston.format.combine(
+		winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
+		winston.format.colorize(),
+		winston.format.printf(function (info) {
+			return info.timestamp + ' ' + info.level + ': ' + info.message;
+		})
+	),
 	transports: [new winston.transports.Console()]
 });
 
@@ -42,7 +48,7 @@ var servers = {};
 var pruneInterval = 350 * 1000;
 
 const ip_to_host = {
-	"85.215.55.189": {port: 30720, host: "eu-1.game.tremulous.online"},
+	"172.99.188.64": {port: 5460, host: "eu-1.game.tremulous.online"},
 	"192.9.134.0": {port: 30720, host: "us-1.game.tremulous.online"},
 	"139.99.210.27": {port: 3326, host: "au-1.game.tremulous.online"},
 }
@@ -172,7 +178,7 @@ function sendGetInfoUDP(udp, rinfo) {
 
 function sendGetServersResponse(conn, servers) {
 	var msg = 'getserversResponse';
-	console.log(servers)
+	logger.debug(JSON.stringify(servers))
 	for (var id in servers) {
 		if (!servers.hasOwnProperty(id)) {
 			continue;
@@ -199,7 +205,7 @@ function sendGetServersResponse(conn, servers) {
 
 function sendGetServersWebResponse(conn, servers) {
 	var msg = 'getserverswebResponse';
-	console.log(servers)
+	logger.debug(JSON.stringify(servers))
 
 	for (var id in servers) {
 		if (!servers.hasOwnProperty(id)) {
@@ -361,11 +367,11 @@ function loadConfig(configPath) {
 	};
 
 	/*try {
-		console.log('Loading config file from ' + configPath + '..');
+		logger.info('Loading config file from ' + configPath + '..');
 		var data = require(configPath);
 		_.extend(config, data);
 	} catch (e) {
-		console.log('Failed to load config', e);
+		logger.error('Failed to load config: ' + e);
 	}*/
 
 	return config;
@@ -387,11 +393,11 @@ function loadConfig(configPath) {
 	const udp = Dgram.createSocket('udp4'); // 'udp4' for IPv4, 'udp6' for IPv6
 
     udp.bind(config.udp_port, () => {
-        console.log('master server (UDP) listening on port ' + config.udp_port);
+        logger.info('master server (UDP) listening on port ' + config.udp_port);
     });
 
     udp.on('message', (buffer, rinfo) => {
-        console.log(`Received UDP connection request from: ${rinfo.address}:${rinfo.port}`);
+        logger.info(`Received UDP connection request from: ${rinfo.address}:${rinfo.port}`);
 		var view = Uint8Array.from(buffer);
 		var buffer = view.buffer;
         // Optionally, send a response back to the client
@@ -406,7 +412,7 @@ function loadConfig(configPath) {
 		} else if (msg.indexOf('infoResponse\n') === 0) {
 			handleInfoResponseUDP(udp, rinfo, msg.substr(13));
 		} else {
-			console.error('unexpected message "' + msg + '"');
+			logger.error('unexpected message "' + msg + '"');
 		}
 	});
 
@@ -449,7 +455,7 @@ function loadConfig(configPath) {
 			} else if (msg.indexOf('subscribe') === 0) {
 				handleSubscribe(conn);
 			} else {
-				console.error('unexpected message "' + msg + '"');
+				logger.error('unexpected message "' + msg + '"');
 			}
 		});
 
@@ -464,7 +470,7 @@ function loadConfig(configPath) {
 
 	// listen only on 0.0.0.0 to force ipv4
 	server.listen(config.websocket_port, '0.0.0.0',  function() {
-			console.log('master server (Websocket) listening on port ' + server.address().port);
+			logger.info('master server (Websocket) listening on port ' + server.address().port);
 	});
 
 	setInterval(pruneServers, pruneInterval);
