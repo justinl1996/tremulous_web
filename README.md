@@ -23,6 +23,9 @@ This hosts the pk3 files to be loaded when the client first visits the website.
 
 Copy or hardlink the files found in `tremulous_assets` into `node/pk3_assets` before deployment. After deploying, you can then view the manifest at `<your-url>/assets/manifest.json`.
 
+## tremulous_client_content
+Combination of tremulous_client and tremulous_content_server to run on the same host
+
 ## tremulous_game_server
 This is for running the game servers.
 

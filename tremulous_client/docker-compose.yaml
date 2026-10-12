@@ -18,13 +18,12 @@ services:
     ports:
       - 8080:8080
     networks:
-      app-network:
-        ipv4_address: 172.20.0.10
+      - app-network
   webserver:
     build:
       context: ./nginx/.
     image: nginx
-    container_name: nginx_webserver
+    container_name: nginx_client_webserver
     ports:
       - 443:443  
     volumes:
@@ -37,7 +36,4 @@ services:
 
 networks:
   app-network:
-    driver: bridge  
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
+    driver: bridge

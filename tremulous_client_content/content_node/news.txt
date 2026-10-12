@@ -1,0 +1,2 @@
+2026-12-10: First release of the web version of Tremulous.
+2026-01-26: Updated assets according to https://github.com/AurigaSyno/tremulous-assets/releases/tag/data-web-release-1

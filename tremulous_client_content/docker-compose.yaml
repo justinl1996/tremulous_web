@@ -1,0 +1,50 @@
+# Experiment: run tremulous_client and tremulous_content_server behind a
+# single shared nginx, on one host, distinguishing domains by server_name.
+# client_node/ and content_node/ are hardlinked copies of the node/ build
+# contexts from tremulous_client and tremulous_content_server, so this
+# directory is self-contained and doesn't modify those originals.
+services:
+  client_nodejs:
+    build:
+      context: ./client_node
+    image: tremulous_client_nodejs
+    container_name: tremulous_client_nodejs
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8080:8080
+    networks:
+      - app-network
+
+  content_nodejs:
+    build:
+      context: ./content_node
+    image: tremulous_content_nodejs
+    container_name: tremulous_content_nodejs
+    environment:
+      NODE_ENV: production
+    ports:
+      - 9000:9000
+    networks:
+      - app-network
+
+  webserver:
+    build:
+      context: ./nginx/.
+    image: nginx
+    container_name: nginx_webserver
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /etc/letsencrypt:/var/lib/letsencrypt
+    depends_on:
+      - client_nodejs
+      - content_nodejs
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
