@@ -22,6 +22,8 @@ services:
   tremulous_server:
     build:
       context: ./server/.
+      additional_contexts:
+        assets: ../tremulous_assets
     image: tremulous_game_server
     container_name: tremulous_game_server
     network_mode: "host"

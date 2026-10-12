@@ -30,6 +30,7 @@ USER node
 
 # Copy the rest of the source files into the image.
 COPY . .
+COPY --from=assets *.pk3 pk3_assets/
 
 # Expose the port that the application listens on.
 EXPOSE 9000

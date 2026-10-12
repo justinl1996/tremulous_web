@@ -7,7 +7,7 @@
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
 # Use Ubuntu 24.04 as the base image
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 # Update package lists and install necessary packages
 RUN apt-get update && \
@@ -17,6 +17,7 @@ WORKDIR /usr/src/app
 
 # Copy the rest of the source files into the image.
 COPY . .
+COPY --from=assets *.pk3 gpp/
 
 RUN chown ubuntu /usr/src/app/gpp
 

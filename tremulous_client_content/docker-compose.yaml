@@ -19,6 +19,8 @@ services:
   content_nodejs:
     build:
       context: ./content_node
+      additional_contexts:
+        assets: ../tremulous_assets
     image: tremulous_content_nodejs
     container_name: tremulous_content_nodejs
     environment:

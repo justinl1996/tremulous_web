@@ -21,7 +21,7 @@ The frontend for `https://www.tremulous.online`. The actual tremulous binary and
 ## tremulous_content_server
 This hosts the pk3 files to be loaded when the client first visits the website.
 
-Copy or hardlink the files found in `tremulous_assets` into `node/pk3_assets` before deployment. After deploying, you can then view the manifest at `<your-url>/assets/manifest.json`.
+The pk3 files in `tremulous_assets` are copied into `node/pk3_assets` at build time (via a compose `additional_contexts`). After deploying, you can then view the manifest at `<your-url>/assets/manifest.json`.
 
 ## tremulous_client_content
 Combination of tremulous_client and tremulous_content_server to run on the same host
@@ -29,7 +29,7 @@ Combination of tremulous_client and tremulous_content_server to run on the same 
 ## tremulous_game_server
 This is for running the game servers.
 
-Copy or hardlink the files found in `tremulous_assets` into `server/gpp` before deployment.
+The pk3 files in `tremulous_assets` are copied into `server/gpp` at build time (via a compose `additional_contexts`); `server/gpp` only needs the `.cfg` files.
 
 ## tremulous_master_server
 Master server for `tremulous.online`. Since this is websocket based, webclients use a seperate master server and cannot communicate with regular clients and game servers.
