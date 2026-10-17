@@ -145,3 +145,6 @@ vite.config.ts.timestamp-*
 !tremulous_assets/*.pk3
 
 */use*.sh
+*/redeploy_all.sh
+*/redeploy.sh
+copy_bin.sh

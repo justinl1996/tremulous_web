@@ -11,6 +11,8 @@ services:
   node_server:
     build:
       context: ./node/.
+      additional_contexts:
+        assets: ../tremulous_assets
     image: tremulous_content_nodejs
     container_name: tremulous_content_nodejs
     environment:
@@ -18,14 +20,13 @@ services:
     ports:
       - 9000:9000
     networks:
-      app-network:
-        ipv4_address: 172.20.0.10
+      - app-network
 
   nginx_server:
     build:
       context: ./nginx/.
     image: nginx
-    container_name: nginx_webserver
+    container_name: nginx_content_webserver
     ports:
       - 443:443
     volumes:
@@ -39,6 +40,3 @@ services:
 networks:
   app-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
