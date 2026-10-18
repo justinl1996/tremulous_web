@@ -8,17 +8,6 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  websockify_server:
-    build:
-      context: ./websockify/.
-    image: websockify_server
-    container_name: websockify_server
-    network_mode: "host"
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt
-    environment:
-      SERVER_NAME: ${SERVER_NAME}
-
   tremulous_server:
     build:
       context: ./server/.
@@ -27,6 +16,8 @@ services:
     image: tremulous_game_server
     container_name: tremulous_game_server
     network_mode: "host"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
     environment:
       SERVER_CONFIG: ${SERVER_CONFIG}
-      
+      SERVER_NAME: ${SERVER_NAME}
