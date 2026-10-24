@@ -21,3 +21,4 @@ services:
     environment:
       SERVER_CONFIG: ${SERVER_CONFIG}
       SERVER_NAME: ${SERVER_NAME}
+      WS_PORT: ${WS_PORT}

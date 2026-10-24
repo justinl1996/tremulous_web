@@ -1,2 +1,6 @@
 2026-12-10: First release of the web version of Tremulous.
 2026-01-26: Updated assets according to https://github.com/AurigaSyno/tremulous-assets/releases/tag/data-web-release-1
+2026-10-11: Added AI bots.
+2026-10-14: Fixed bullet decals appearing as black boxes.
+2026-10-15: Improved rendering performance.
+2026-10-17: Smarter bots: they use their movement abilities, balance teams, retreat to heal, and get stuck less.
