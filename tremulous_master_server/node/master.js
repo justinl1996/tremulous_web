@@ -446,12 +446,9 @@ function loadConfig(configPath) {
 				return;
 			}
 
+			// browsers may only ask for the list; heartbeat/infoResponse are accepted over UDP only
 			if (msg.indexOf('getserversExt ') === 0) {
 				handleGetServers(conn, msg.substr(11));
-			} else if (msg.indexOf('heartbeat ') === 0) {
-				handleHeartbeat(conn, msg.substr(10));
-			} else if (msg.indexOf('infoResponse\n') === 0) {
-				handleInfoResponse(conn, msg.substr(13));
 			} else if (msg.indexOf('subscribe') === 0) {
 				handleSubscribe(conn);
 			} else {
