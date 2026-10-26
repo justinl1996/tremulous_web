@@ -29,7 +29,13 @@ Combination of tremulous_client and tremulous_content_server to run on the same 
 ## tremulous_game_server
 This is for running the game servers.
 
-The pk3 files in `tremulous_assets` are copied into `server/gpp` at build time (via a compose `additional_contexts`); `server/gpp` only needs the `.cfg` files.
+Only the frequently changing `vms-*.pk3` from `tremulous_assets` is copied into `server/gpp` at build time (via a compose `additional_contexts`); `server/gpp` only needs the `.cfg` files.
+
+The rarely changing pk3s (`map-*.pk3`, `data-1.1.0.pk3`, `data-gpp1.pk3`, `data-web-1.3.1.pk3`) live on each host under `~/tremulous-data/gpp` and are mounted read-only into the container as `fs_basepath`. Sync them (requires `rsync` on the hosts) whenever they change or when setting up a new host:
+```
+./sync_assets.sh
+```
+The host path is set per server via `TREMULOUS_DATA_DIR` in `env/*.env`.
 
 ## tremulous_master_server
 Master server for `tremulous.online`. Since this is websocket based, webclients use a seperate master server and cannot communicate with regular clients and game servers.

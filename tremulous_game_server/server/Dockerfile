@@ -17,7 +17,9 @@ WORKDIR /usr/src/app
 
 # Copy the rest of the source files into the image.
 COPY . .
-COPY --from=assets *.pk3 gpp/
+# Only the frequently changing vms pk3 is baked into the image; maps and base
+# data are mounted at /tremulous-data (fs_basepath) from ~/tremulous-data on the host
+COPY --from=assets vms-*.pk3 gpp/
 
 RUN chown ubuntu /usr/src/app/gpp
 
@@ -31,7 +33,7 @@ EXPOSE 40720
 #CMD ./tremded +set fs_homepath /usr/src/app +set dedicated 2 +exec ${SERVER_CONFIG}  +set sv_master1 146.235.227.204
 #CMD sleep 1000
 
-CMD ./tremded +set fs_homepath /usr/src/app +set dedicated 2 \
+CMD ./tremded +set fs_basepath /tremulous-data +set fs_homepath /usr/src/app +set dedicated 2 \
     +set net_websocket 1 +set net_wsPort ${WS_PORT} \
     +set net_wsCert /etc/letsencrypt/live/${SERVER_NAME}/fullchain.pem \
     +set net_wsKey /etc/letsencrypt/live/${SERVER_NAME}/privkey.pem \

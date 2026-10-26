@@ -4,3 +4,6 @@
 2026-10-14: Fixed bullet decals appearing as black boxes.
 2026-10-15: Improved rendering performance.
 2026-10-17: Smarter bots: they use their movement abilities, balance teams, retreat to heal, and get stuck less.
+2026-10-17: Humans can switch weapons with the number keys.
+2026-10-25: Open the menu with P or F10 as well as Esc, and hide the tutorial with O.
+2026-10-26: Maps you don't have are now downloaded straight from the game server.
