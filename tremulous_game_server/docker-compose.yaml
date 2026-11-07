@@ -20,6 +20,10 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
       # Rarely changing pk3s (maps, base data), synced by sync_assets.sh
       - ${TREMULOUS_DATA_DIR}:/tremulous-data:ro
+      # SQLite player log (players.db plus its -wal/-shm files), kept on the
+      # host so it survives rebuilds. Mount the directory, not the file: WAL
+      # mode needs to create files next to the database.
+      - ${PLAYER_DB_DIR:?set PLAYER_DB_DIR in the env file}:/tremulous-db
     environment:
       SERVER_CONFIG: ${SERVER_CONFIG}
       SERVER_NAME: ${SERVER_NAME}
