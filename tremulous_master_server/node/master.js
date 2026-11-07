@@ -51,6 +51,7 @@ const ip_to_host = {
 	"172.99.188.64": {port: 5460, host: "eu-1.game.tremulous.online"},
 	"192.9.134.0": {port: 30720, host: "us-1.game.tremulous.online"},
 	"139.99.210.27": {port: 3326, host: "au-1.game.tremulous.online"},
+	"103.176.221.10": {port: 30720, host: "au-2.game.tremulous.online"},
 }
 
 function formatOOB(data) {

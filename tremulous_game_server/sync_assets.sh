@@ -28,3 +28,4 @@ sync_assets() {
 sync_assets root@139.99.210.27 2065   # au-1 (tierhive-au-1)
 sync_assets ubuntu@192.9.134.0 22     # us-1 (oracle-amd-2)
 sync_assets root@172.99.188.64 2862   # eu-1 (tierhive-eu-1)
+sync_assets debian@192.168.1.149 22   # au-2 (hp-elitedesk)
